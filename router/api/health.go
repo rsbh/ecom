@@ -6,8 +6,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type PingResponse struct {
+	Message string `json:"message"`
+}
+
+// Ping godoc
+// @Summary Health route
+// @Accept  json
+// @Success 200 {object} PingResponse
+// @Router /api/ping [get]
 func Ping(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "pong",
-	})
+	resp := PingResponse{"pong"}
+	c.JSON(http.StatusOK, resp)
 }

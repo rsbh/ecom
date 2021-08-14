@@ -1,0 +1,22 @@
+definitions:
+  api.PingResponse:
+    properties:
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+  title: ecom API
+  version: "1.0"
+paths:
+  /api/ping:
+    get:
+      consumes:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.PingResponse'
+      summary: Responds to ping
+swagger: "2.0"
