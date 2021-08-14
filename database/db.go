@@ -12,6 +12,10 @@ import (
 	"gorm.io/gorm"
 )
 
+func AutoMigrate(db *gorm.DB) {
+	db.AutoMigrate(&entity.Customer{})
+}
+
 func Connect(config config.DatabaseConfig) *gorm.DB {
 	log.Println("Connecting to database...")
 	dsn := url.URL{
@@ -26,6 +30,5 @@ func Connect(config config.DatabaseConfig) *gorm.DB {
 	}
 	log.Println("Connected to database...")
 
-	db.AutoMigrate(&entity.Customer{})
 	return db
 }

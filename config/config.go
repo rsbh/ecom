@@ -10,7 +10,8 @@ import (
 )
 
 type ServerConfig struct {
-	Port int `env:"PORT,default=8080"`
+	Address string `env:"SERVER_ADDRESS,default=localhost"`
+	Port    int    `env:"PORT,default=8080"`
 }
 
 type DatabaseConfig struct {
