@@ -1,22 +1,23 @@
-package api_test
+package api
 
 import (
-	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
-	"github.com/rsbh/ecom/router"
-
+	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestPing(t *testing.T) {
-	logger := log.Default()
+	gin.SetMode(gin.TestMode)
+
 	expected := "{\"message\": \"pong\"}"
-	r := router.InitRouter(logger)
+	r := gin.Default()
+	h := NewHandler(nil)
+	h.SetupRoutes(&r.RouterGroup)
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("GET", "/api/ping", nil)
+	req, _ := http.NewRequest("GET", "/ping", nil)
 	r.ServeHTTP(w, req)
 	assert.Equal(t, 200, w.Code)
 	assert.JSONEq(t, expected, w.Body.String())
