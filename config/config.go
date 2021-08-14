@@ -14,10 +14,11 @@ type ServerConfig struct {
 }
 
 type DatabaseConfig struct {
-	Username string `env:"DB_USERNAME,default=ecom"`
+	Username string `env:"DB_USERNAME,default=postgres"`
 	Password string `env:"DB_PASSWORD,default="`
 	Host     string `env:"DB_HOST,default=localhost"`
 	Port     int    `env:"DB_PORT,default=5432"`
+	Database string `env:"DB_DATABASE,default=ecom"`
 }
 
 type Config struct {
@@ -25,7 +26,7 @@ type Config struct {
 	Database DatabaseConfig
 }
 
-func LoadConfig() {
+func LoadConfig() *Config {
 	viper.SetConfigName("config")
 	viper.AddConfigPath(".")
 	viper.SetConfigType("yaml")
@@ -52,5 +53,5 @@ func LoadConfig() {
 		fmt.Printf("Unable to decode config into struct, %v\n", err)
 	}
 
-	fmt.Printf("config: %+v\n", config)
+	return &config
 }
