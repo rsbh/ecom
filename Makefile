@@ -3,3 +3,6 @@ build: build-swaager
 
 build-swaager:
 	swag init -g router/router.go
+
+test:
+	go test -v -cover ./...

@@ -15,6 +15,7 @@ require (
 	github.com/rogpeppe/go-internal v1.8.0 // indirect
 	github.com/spf13/cast v1.4.0 // indirect
 	github.com/spf13/viper v1.8.1
+	github.com/stretchr/testify v1.7.0 // indirect
 	github.com/swaggo/files v0.0.0-20190704085106-630677cd5c14 // indirect
 	github.com/swaggo/gin-swagger v1.3.1 // indirect
 	github.com/swaggo/swag v1.7.1 // indirect
