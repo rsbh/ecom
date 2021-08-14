@@ -15,7 +15,7 @@ type PingResponse struct {
 // @Accept  json
 // @Success 200 {object} PingResponse
 // @Router /api/ping [get]
-func Ping(c *gin.Context) {
+func (h *Handler) Ping(c *gin.Context) {
 	resp := PingResponse{"pong"}
 	c.JSON(http.StatusOK, resp)
 }

@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"log"
 	"strings"
 
@@ -27,7 +26,7 @@ type Config struct {
 	Database DatabaseConfig
 }
 
-func LoadConfig() *Config {
+func LoadConfig(logger *log.Logger) *Config {
 	viper.SetConfigName("config")
 	viper.AddConfigPath(".")
 	viper.SetConfigType("yaml")
@@ -37,21 +36,21 @@ func LoadConfig() *Config {
 
 	if err := viper.ReadInConfig(); err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-			fmt.Println("Config File not found")
+			logger.Println("Config File not found")
 		} else {
-			log.Fatal(err)
+			logger.Fatal(err)
 		}
 	}
 
 	var config Config
 
 	if err := envdecode.Decode(&config); err != nil {
-		log.Fatalf("Failed to decode: %s", err)
+		logger.Fatalf("Failed to decode: %s", err)
 	}
 
 	err := viper.Unmarshal(&config)
 	if err != nil {
-		fmt.Printf("Unable to decode config into struct, %v\n", err)
+		logger.Fatalf("Unable to decode config into struct, %v\n", err)
 	}
 
 	return &config

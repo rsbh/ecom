@@ -1,6 +1,7 @@
 package api_test
 
 import (
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -11,8 +12,9 @@ import (
 )
 
 func TestPing(t *testing.T) {
+	logger := log.Default()
 	expected := "{\"message\": \"pong\"}"
-	r := router.InitRouter()
+	r := router.InitRouter(logger)
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/api/ping", nil)
 	r.ServeHTTP(w, req)

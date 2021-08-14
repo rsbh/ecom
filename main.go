@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/rsbh/ecom/config"
 	"github.com/rsbh/ecom/database"
@@ -10,9 +11,10 @@ import (
 )
 
 func main() {
-	c := config.LoadConfig()
+	logger := log.New(os.Stdout, "", log.LstdFlags)
+	c := config.LoadConfig(logger)
 	db := database.Connect(c.Database)
 	database.AutoMigrate(db)
-	r := router.InitRouter()
-	log.Fatal(r.Run(fmt.Sprintf("%s:%d", c.Server.Address, c.Server.Port)))
+	r := router.InitRouter(logger)
+	logger.Fatal(r.Run(fmt.Sprintf("%s:%d", c.Server.Address, c.Server.Port)))
 }
