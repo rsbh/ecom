@@ -23,12 +23,28 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/customer": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "summary": "Return List of customers",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.GetCustomerListResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/ping": {
             "get": {
                 "consumes": [
                     "application/json"
                 ],
-                "summary": "Responds to ping",
+                "summary": "Health route",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -41,11 +57,63 @@ var doc = `{
         }
     },
     "definitions": {
+        "api.GetCustomerListResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/entity.Customer"
+                    }
+                }
+            }
+        },
         "api.PingResponse": {
             "type": "object",
             "properties": {
                 "message": {
                     "type": "string"
+                }
+            }
+        },
+        "entity.Customer": {
+            "type": "object",
+            "properties": {
+                "birthDate": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "$ref": "#/definitions/gorm.DeletedAt"
+                },
+                "fname": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "lname": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "gorm.DeletedAt": {
+            "type": "object",
+            "properties": {
+                "time": {
+                    "type": "string"
+                },
+                "valid": {
+                    "description": "Valid is true if Time is not NULL",
+                    "type": "boolean"
                 }
             }
         }

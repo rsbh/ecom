@@ -14,7 +14,7 @@ func TestPing(t *testing.T) {
 
 	expected := "{\"message\": \"pong\"}"
 	r := gin.Default()
-	h := NewHandler(nil)
+	h := NewHandler(nil, nil)
 	h.SetupRoutes(&r.RouterGroup)
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/ping", nil)

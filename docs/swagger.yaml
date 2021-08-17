@@ -1,14 +1,58 @@
 definitions:
+  api.GetCustomerListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/entity.Customer'
+        type: array
+    type: object
   api.PingResponse:
     properties:
       message:
         type: string
+    type: object
+  entity.Customer:
+    properties:
+      birthDate:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      fname:
+        type: string
+      gender:
+        type: string
+      id:
+        type: integer
+      lname:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
     type: object
 info:
   contact: {}
   title: ecom API
   version: "1.0"
 paths:
+  /api/customer:
+    get:
+      consumes:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.GetCustomerListResponse'
+      summary: Return List of customers
   /api/ping:
     get:
       consumes:
@@ -18,5 +62,5 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/api.PingResponse'
-      summary: Responds to ping
+      summary: Health route
 swagger: "2.0"

@@ -7,6 +7,7 @@ import (
 
 	"github.com/rsbh/ecom/config"
 	"github.com/rsbh/ecom/database"
+	"gorm.io/gorm"
 
 	"github.com/gin-gonic/gin"
 
@@ -19,9 +20,9 @@ import (
 
 // @title ecom API
 // @version 1.0
-func InitRouter(logger *log.Logger) *gin.Engine {
+func InitRouter(logger *log.Logger, db *gorm.DB) *gin.Engine {
 	r := gin.Default()
-	h := api.NewHandler(logger)
+	h := api.NewHandler(logger, db)
 	apiRouter := r.Group("/api")
 	h.SetupRoutes(apiRouter)
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
@@ -33,6 +34,6 @@ func main() {
 	c := config.LoadConfig(logger)
 	db := database.Connect(c.Database)
 	database.AutoMigrate(db)
-	r := InitRouter(logger)
+	r := InitRouter(logger, db)
 	logger.Fatal(r.Run(fmt.Sprintf("%s:%d", c.Server.Address, c.Server.Port)))
 }
